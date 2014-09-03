@@ -157,12 +157,19 @@ namespace cameraSetup
                                 backgroundWorker1.ReportProgress(0);
                             }
                         }
+                        else
+                        {
+                            
+                            
+                            Thread.Sleep(10);
+                        }
 
                     }
                 }
                 else
                 {
                     Thread.Sleep(100);
+                    
                 }
             }
             
@@ -175,14 +182,77 @@ namespace cameraSetup
                 if (rxQueue.Count != 0)
                 {
                     string strout = rxQueue.Dequeue().ToString();
-                    if (strout != "\n")
+                    if (strout == "\n")
+                    {
+
+                        int lineCount = richTextBox1.Lines.Count();
+
+                        if (lineCount >= 10)
+                        {
+                            for (int i = 0; i <= lineCount - 44; i++)
+                            {
+                                richTextBox1.Text = richTextBox1.Text.Remove(0, richTextBox1.Lines[0].Length + 2);   //plus 2 for /r
+                            }
+                        }
+
+                        richTextBox1.ScrollToCaret();
+
+                    }
+                    //else if (strout == "\r")
+                    //{
+                    //    // richTextBox1.AppendText(strout);
+                    //    richTextBox1.ScrollToCaret();
+                    //    if (richTextBox1.Lines.Count() >= 10)
+                    //    {
+                    //        richTextBox1.Text.Remove(0, richTextBox1.Lines[0].Length + 2);   //plus 2 for /r
+                    //    }
+                    //    richTextBox1.AppendText(strout);
+                    //}
+
+                    else if (strout == "\b")
+                    {
+
+                        int displayLineCount = richTextBox1.Lines.Length;
+                        if (displayLineCount > 0)
+                        {
+                            string lastLine = richTextBox1.Lines[displayLineCount - 1];
+                            int lastLineLength = lastLine.Length;
+                            if (lastLineLength > 0)
+                            {
+                                // Get count of all characters from beginning of display up to the current line.
+                                // For purposes of calculating character offset of the last display character from
+                                // the beginning of the display, the length of each line is considered to be 1 plus
+                                // the number of characters on that line.
+                                int length = 0;
+                                for (int lineNo = 0; lineNo < displayLineCount - 1; ++lineNo) length += richTextBox1.Lines[lineNo].Length + 1;
+                                richTextBox1.Select(length + lastLineLength - 1, 1);
+                                richTextBox1.SelectedText = "";
+                                richTextBox1.SelectionStart = length + lastLineLength - 1;
+                            }
+                        }
+
+                    }
+                    else
                     {
                         richTextBox1.AppendText(strout);
                     }
+
+                    richTextBox1.Select(richTextBox1.Text.Length, 0);
+                    
+                    
                 }
             }
             else
             {
+                //int lineCount = richTextBox1.Lines.Count();
+
+                //if (lineCount >= 10)
+                //{
+                //    for (int i = 0; i <= lineCount - 10; i++)
+                //    {
+                //        richTextBox1.Text = richTextBox1.Text.Remove(0, richTextBox1.Lines[0].Length + 2);   //plus 2 for /r
+                //    }
+                //}
 
             }
         }
@@ -191,13 +261,15 @@ namespace cameraSetup
         {
             e.Handled = true;
             char[] key = new char[1]{e.KeyChar};
-            comport.Write(key, 0, 1);
-            
-        }
+            if (comport.IsOpen)
+            {
+                comport.Write(key, 0, 1);
+            }
+            else
+            {
+                MessageBox.Show("comport is closed");
+            }
 
-        private void richTextBox1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-        {
-            
         }
 
         private void resetButton_Click(object sender, EventArgs e)
@@ -561,6 +633,11 @@ namespace cameraSetup
         {
             DBView dbView = new DBView();
             dbView.Show();
+        }
+
+        private void richTextBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
         }
 
 

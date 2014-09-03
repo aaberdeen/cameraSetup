@@ -85,9 +85,9 @@
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.DiscinnectButton = new System.Windows.Forms.Button();
-            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.cyclePortButton = new System.Windows.Forms.Button();
             this.readDB = new System.Windows.Forms.Button();
+            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -103,11 +103,11 @@
             // 
             this.richTextBox1.Location = new System.Drawing.Point(0, 39);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(617, 337);
+            this.richTextBox1.Size = new System.Drawing.Size(617, 589);
             this.richTextBox1.TabIndex = 1;
             this.richTextBox1.Text = "";
+            this.richTextBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox1_KeyDown);
             this.richTextBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.richTextBox1_KeyPress);
-            this.richTextBox1.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.richTextBox1_PreviewKeyDown);
             // 
             // backgroundWorker1
             // 
@@ -619,14 +619,6 @@
             this.DiscinnectButton.UseVisualStyleBackColor = true;
             this.DiscinnectButton.Click += new System.EventHandler(this.DiscinnectButton_Click);
             // 
-            // richTextBox2
-            // 
-            this.richTextBox2.Location = new System.Drawing.Point(3, 382);
-            this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(614, 275);
-            this.richTextBox2.TabIndex = 57;
-            this.richTextBox2.Text = "";
-            // 
             // cyclePortButton
             // 
             this.cyclePortButton.Location = new System.Drawing.Point(289, 10);
@@ -646,6 +638,14 @@
             this.readDB.Text = "Read Data Base";
             this.readDB.UseVisualStyleBackColor = true;
             this.readDB.Click += new System.EventHandler(this.readDB_Click);
+            // 
+            // richTextBox2
+            // 
+            this.richTextBox2.Location = new System.Drawing.Point(3, 634);
+            this.richTextBox2.Name = "richTextBox2";
+            this.richTextBox2.Size = new System.Drawing.Size(614, 23);
+            this.richTextBox2.TabIndex = 57;
+            this.richTextBox2.Text = "";
             // 
             // Form1
             // 
@@ -767,9 +767,9 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Button DiscinnectButton;
-        private System.Windows.Forms.RichTextBox richTextBox2;
         private System.Windows.Forms.Button cyclePortButton;
         private System.Windows.Forms.Button readDB;
+        private System.Windows.Forms.RichTextBox richTextBox2;
     }
 }
 
